@@ -19,7 +19,7 @@ const initailState = {
      theme: {
           mode: 'dark',
           backgroundColor: dark,
-          textColor: 'white'
+          textColor: 'light'
      },
      contextMenu: {
           clientX: 0,
@@ -44,12 +44,12 @@ function reducer(state , action){
           case THEME_DARK:
                return {
                     ...state,
-                    theme: {mode:'dark', backgroundColor: dark , textColor: 'white'},
+                    theme: {mode:'dark', backgroundColor: dark , textColor: 'light'},
                };
           case THEME_LIGHT:
                return {
                     ...state,
-                    theme: {mode:'light', backgroundColor: light , textColor: 'black'},
+                    theme: {mode:'light', backgroundColor: light , textColor: 'dark'},
                };
           case CONTEXT_MENU:
                return {
@@ -84,3 +84,104 @@ function reducer(state , action){
      }
 }
 
+const ThemeSettings = createContext({
+     ...initailState,
+})
+
+export const SettingContext = ({ children}) => {
+     const [state, dispatch] = useReducer(reducer, initailState);
+
+     const setEventEmitter = (payload) =>{
+          dispatch({
+               type: EVENT_EMITTER,
+               payload,
+          })
+     };
+
+     const themeMode = (value)=> {
+          const { mode } = state.theme;
+          if(value === 'light'){
+               return dispatch({ type: THEME_LIGHT})
+          }
+          dispatch({type: THEME_DARK})
+     };
+
+     const closeContextMenu = () => {
+          dispatch({
+               type: CLOSE_CONTEXT_MENU
+          })
+     };
+
+     const changeTitle = (value) => {
+          dispatch({
+               type: PODCAST_TITLE,
+               payload: value
+          })
+     };
+
+     const setAnnotations = (value) => {
+          dispatch({
+               type: ANNOTATIONS,
+               payload: value
+          })
+     };
+
+     const setShowAnnotations = (value) =>{
+          dispatch({
+               type: SETSHOWANNOTATIONS,
+               payload: value
+          })
+     };
+
+     const setEnableAnnotations = (value) => {
+          dispatch({
+               type: SETENEABLEANNOTATIONS,
+               payload: value,
+          })
+     };
+
+     const setDialogBox = (value) => {
+          dispatch({
+               type: SETDIALOGBOX,
+               payload: value
+          });
+     };
+
+     ///insert useEffect later here
+
+     const {
+          theme : {mode , backgroundColor},
+     } = state
+     
+     // const theme = ({
+     //      palette :{
+     //           mode,
+     //           background : {
+     //                default: backgroundColor
+     //           },
+     //      },
+     // });
+
+     return (
+          <ThemeSettings.Provider
+               value={{
+                    ...state,
+                    themeMode,
+                    closeContextMenu,
+                    setEventEmitter,
+                    changeTitle,
+                    setAnnotations,
+                    setEnableAnnotations,
+                    setDialogBox,
+               }}
+          >
+               {/* insert contextMenu Component */}
+               {children}
+
+          </ThemeSettings.Provider>
+          
+
+     )
+}    
+
+export default ThemeSettings;

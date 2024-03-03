@@ -2,14 +2,26 @@ import './App.css';
 import { useReducer, useRef } from "react";
 import { reducer } from './reducer';
 import EventEmitter from 'event-emitter';
-import Box from './components/ui/box'
+import { useThemeSettings } from './hooks/use-theme-settings';
+import Navbar from './components/navbar';
 
-const Editor = () => {
+const  Editor = () => {
 
   const {
     theme,
+    setEventEmitter,
     podcast,
-  } = 
+    showAnnotations,
+    setShowAnnotations,
+    enableAnnotations,
+    setEnableAnnotations,
+    dialogBox,
+    setDialogBox
+  } = useThemeSettings();
+  console.log()
+
+  const { backgroundColor , textColor } = theme;
+
 
   const initailState = {
     ee: new EventEmitter(),
@@ -30,9 +42,22 @@ const Editor = () => {
     enanleCut,
     enableSplit
   } = state
+
+
   return (
-    <Box className ="pt-10 overflow-y-auto overflow-x-hidden">
-    </Box>
+    <div className = {
+        `
+        pt-0.5
+        overflow-y-auto
+        overflow-x-hidden
+        h-screen
+        w-screen
+        `}
+        style={{ backgroundColor: backgroundColor, color: textColor}}
+    >
+        <Navbar/>
+      
+    </div>
   )
 }
 
