@@ -10,6 +10,7 @@ import { Tooltip,
 } from "./ui/tooltip";
 import{ Button }from '@/components/ui/button'
 import { ModeToggle } from "@/components/ui/dark-toggle";
+import { AudioLines } from "lucide-react";
 
 
 const Navbar = () => {
@@ -25,7 +26,6 @@ const Navbar = () => {
           setDialogBox
      } = useThemeSettings();
 
-     console.log(setDialogBox)
      const [ loading , setLoading] = useState(false);
 
      return (
@@ -37,14 +37,7 @@ const Navbar = () => {
                     <div className= "flex justify-between items-center h-full gap-2 px-6"
                          style={{color: textColor === "light" ? light: dark}}
                     >
-                         <Bars
-
-                              height={20}
-                              width={20}
-                              color={textColor === "light" ? light: dark}
-                              ariaLabel="bars-loading"
-                              visible={open}
-                         />
+                         <AudioLines size={20}/>
                          <p 
                               className= "font-semibold text-3xl"
                               style={{color: textColor === "light" ? light: dark}}
