@@ -1,11 +1,14 @@
 import './App.css';
 import { useEffect, useReducer, useRef } from "react";
-import { reducer } from './reducer';
 import EventEmitter from 'event-emitter';
+
+
+import { reducer } from './reducer';
 import { useThemeSettings } from './hooks/use-theme-settings';
 import Navbar from './components/navbar';
 import DialogBox from './components/dialog-box';
 import EditorButtons from './components/EditorButtons/EditorButtons';
+import CustomTimeLine from './components/audiobar/CustomAudioBar';
 
 const  Editor = () => {
 
@@ -43,7 +46,6 @@ const  Editor = () => {
     enableSplit
   } = state
   
-  // ============> React-studio <=======================>
 
   function handleUpload(event){
     const file = event.target.files[0]
@@ -60,6 +62,10 @@ const  Editor = () => {
     }
     uploadAnnRef.current.value = '';
   }
+
+// ============> React-studio <=======================>
+  
+
   function handleClick(event) {
     const { name } = event.target;
 
@@ -147,8 +153,8 @@ const  Editor = () => {
             onChange={handleAnnUpload}
             className='hidden'
           />
-
         </div>
+      <CustomTimeLine bottom={!allButtons ? 0 : -100} ee={ee}/>
     </div>
   )
 }

@@ -1,0 +1,20 @@
+.audioBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  
+}
+
+.audioBar::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  position: relative;
+  bottom: 7px;
+}
+
+
+.audioBar::-webkit-slider-runnable-track {
+  height: 2px;
+  cursor: pointer;
+}
