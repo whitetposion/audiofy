@@ -87,7 +87,7 @@ const CustomTimeLine = ({bottom , ee}) => {
           }
      },[key, code , shiftKey])
      return (
-          <div className={`w-full fixed left-0 -bottom-${bottom === 0 ? "0" :"full"} py-6 px-10`}>
+          <div className={`w-full fixed  left-0 ${bottom === 0 ? 'bottom-0' :'-bottom-full'} py-6 px-10`}>
                <div 
                     className={`flex justify-between items-center gap-2 h-30 backdrop-blur-md rounded-3xl duration-70 bg-${bottom === 0 ? 'trasparent': 'white'}
                          py-0 px-${bottom === 0 ? '8px' : '300px'}

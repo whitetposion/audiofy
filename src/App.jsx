@@ -1,14 +1,18 @@
 import './App.css';
-import { useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import EventEmitter from 'event-emitter';
+import ReactStudio from 'react-studio-js'
+import * as Tone from 'tone'
+import { v4 as uuidv4} from 'uuid'
+import { saveAs } from 'file-saver'
 
-
-import { reducer } from './reducer';
+import { PLAYLIST, SET_BUTTONS, SET_ENABLE_CUT, SET_ENABLE_SPLIT, reducer } from './reducer';
 import { useThemeSettings } from './hooks/use-theme-settings';
 import Navbar from './components/navbar';
 import DialogBox from './components/dialog-box';
 import EditorButtons from './components/EditorButtons/EditorButtons';
 import CustomTimeLine from './components/audiobar/CustomAudioBar';
+import { dark, light } from './theme';
 
 const  Editor = () => {
 
@@ -28,6 +32,8 @@ const  Editor = () => {
   
   const initailState = {
     ee: new EventEmitter(),
+    toneCtx: Tone.getContext(),
+    setUpChain: useRef(),
     uploadRef: useRef(null),
     uploadAnnRef: useRef(null),
     allButtons: true,
@@ -39,6 +45,8 @@ const  Editor = () => {
   const [ state, dispatch] = useReducer(reducer, initailState)
   const {
     ee,
+    toneCtx,
+    setUpChain,
     uploadRef,
     uploadAnnRef,
     allButtons,
@@ -47,13 +55,6 @@ const  Editor = () => {
   } = state
   
 
-  function handleUpload(event){
-    const file = event.target.files[0]
-    if(!file){
-      return;
-    }
-    uploadRef.current.value = '';
-  }
 
   function handleAnnUpload(event){
     const file = event.target.files[0];
@@ -62,9 +63,165 @@ const  Editor = () => {
     }
     uploadAnnRef.current.value = '';
   }
+const actions = [
+    {
+      class: 'fas.fa-play',
+      title: 'Play Annotation',
+      action: (annotation) => {
+        ee.emit('play', annotation.start, annotation.end);
+      },
+    },
+    {
+      class: 'fas.fa-plus',
+      title: 'Insert New Annotation',
+      action: (annotation, i, annotations, opts) => {
+        if (i === annotations.length - 1) {
+          return console.log('not possible');
+        }
 
+        let newIndex = i + 1;
+        const newAnnotation = {
+          id: String(newIndex),
+          start: annotation.end,
+          end: annotations[i + 1].start,
+          lines: ['New Draft'],
+          lang: 'en',
+        };
+
+        annotations.forEach((ann, indx) => {
+          if (indx >= newIndex) {
+            return (ann.id = String(indx + 1));
+          }
+        });
+        annotations.splice(i + 1, 0, newAnnotation);
+      },
+    },
+
+    {
+      class: 'fas.fa-trash',
+      title: 'Delete annotation',
+      action: (annotation, i, annotations) => {
+        annotations.splice(i, 1);
+      },
+    },
+  ];
 // ============> React-studio <=======================>
-  
+  const container = useCallback(
+    (node) => {
+      if(node !== null && toneCtx !== null){
+        const playlist = ReactStudio(
+          {
+            ac:toneCtx.rawContext,
+            container: node,
+            state: 'cursor',
+            mono: true,
+            samplesPerPixel: 500,
+            waveHeight:100,
+            isAutomaticScroll:true,
+            timescale: false,
+            barGap: 1,
+            colors: {
+              waveOutlineColor: `${backgroundColor === 'light'? light : dark}`,
+              timeColor: '#ffffff',
+              fadeColor: 'grey',
+              customClass: {
+                color: 'white'
+              }
+            },
+            controls: {
+              show: true,
+              width:175,
+              widgets: {
+                collapse: false,
+                remove: true
+              },
+            },
+            
+            zoomLevels:[500, 1000 ,2000],
+            seekStyle: 'fill'
+          },
+          ee
+        );
+        dispatch({
+          type: PLAYLIST,
+          payload: playlist
+        });
+
+        ee.on('audiorenderingstarting', function (offlineCtx, a){
+            const offlineContext = new Tone.OfflineContext(offlineCtx);
+            Tone.setContext(offlineContext);
+            setUpChain.current = a;
+        });
+        ee.on('audiorenderingfinished', function (type , data ){
+          Tone.setContext(toneCtx);
+          if(type === 'wav'){
+            saveAs(data, `${podcast}.wav`)
+          }
+        });
+        ee.on('audiosources_rendering', ()=> setDialogBox(true));
+
+        ee.on('audiosourcesrendered', ()=> {
+          setDialogBox(false)
+        })
+
+        ee.on('tracksUpdated', (e) => 
+          dispatch({
+            type: SET_BUTTONS,
+            payload: e,
+          })
+        );
+
+        ee.on('tracksLeft', (tracks) =>{
+          if (tracks === 0) {
+            dispatch({
+              type: SET_BUTTONS,
+              payload: true
+            })
+          }
+        });
+
+        ee.on('audiosourceserror', (e) =>
+          alert(e.message+ ' ' + ' please only use type mp3')
+        );
+
+        ee.on('enableCut', (fact) =>
+          dispatch({
+            type: SET_ENABLE_CUT,
+            payload: fact
+          })
+        );
+
+        ee.on('enableSplit', (fact) =>
+          dispatch({
+            type: SET_ENABLE_SPLIT,
+            payload: fact,
+          })
+        );
+
+        ee.on('clearAnnotations', ()=> {
+          setEnableAnnotations(true);
+
+          setShowAnnotations(false);
+        });
+
+        playlist.initExporter();
+        console.log(">>>>>>Loaaso")
+        setEventEmitter(ee)
+      }
+    }, [ee, toneCtx]
+  )
+  function handleUpload(event){
+    const file = event.target.files[0]
+    if(!file){
+      return;
+    }
+    ee.emit('newtrack', {
+      file: file,
+      name: file.name,
+      id: uuidv4(),
+    });
+    uploadRef.current.value = '';
+  }
 
   function handleClick(event) {
     const { name } = event.target;
@@ -116,7 +273,6 @@ const  Editor = () => {
 
 
 
-
   return (
     <div className = {
         `
@@ -154,6 +310,14 @@ const  Editor = () => {
             className='hidden'
           />
         </div>
+        <div
+            ref={container}
+            onDragOver={() => console.log('ure dragging')}
+            id={'editor'}
+            className={`text-${textColor === 'light' ? light: dark}`}
+          > 
+        </div>
+
       <CustomTimeLine bottom={!allButtons ? 0 : -100} ee={ee}/>
     </div>
   )
