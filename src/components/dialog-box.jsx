@@ -16,8 +16,8 @@ const DialogBox = ({ open }) => {
     top: 0,
     left: 0,
     zIndex: 9999,
-    opacity: 0.5,
-    backgroundColor: backgroundColor === "light" ? light : dark
+    opacity: 0.8,
+    backgroundColor: backgroundColor
   };
 
   return (
@@ -27,7 +27,7 @@ const DialogBox = ({ open }) => {
           className=""
           height={80}
           width={80}
-          color={textColor === "light" ? light : dark}
+          color={textColor}
           ariaLabel="bars-loading"
           visible={open}
         />

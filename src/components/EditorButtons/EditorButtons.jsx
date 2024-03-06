@@ -112,61 +112,40 @@ const EditorButtons = ({
                     />
                )
           },
-          {
-               name: 'addAnnotations',
-               icon : (
-                    <CaseUpper
-                         onClick={() => {
-                              const event = { target: { name: 'addAnnotations' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
-          {
-               name: 'downloadAnnotation',
-               icon : (
-                    <AArrowDown
-                         onClick={() => {
-                              const event = { target: { name: 'downloadAnnotation' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
-          {
-               name: 'clearAnnotations',
-               icon : (
-                    <MessageSquareOff
-                         onClick={() => {
-                              const event = { target: { name: 'clearAnnotations' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
-          {
-               name: 'upload',
-               icon : (
-                    <Upload
-                         onClick={() => {
-                              const event = { target: { name: 'upload' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
-          {
-               name: 'download',
-               icon : (
-                    <Download
-                         onClick={() => {
-                              const event = { target: { name: 'download' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          }
+          // {
+          //      name: 'addAnnotations',
+          //      icon : (
+          //           <CaseUpper
+          //                onClick={() => {
+          //                     const event = { target: { name: 'addAnnotations' } };
+          //                     handleClick(event);
+          //                }}   
+          //           />
+          //      )
+          // },
+          // {
+          //      name: 'downloadAnnotation',
+          //      icon : (
+          //           <AArrowDown
+          //                onClick={() => {
+          //                     const event = { target: { name: 'downloadAnnotation' } };
+          //                     handleClick(event);
+          //                }}   
+          //           />
+          //      )
+          // },
+          // {
+          //      name: 'clearAnnotations',
+          //      icon : (
+          //           <MessageSquareOff
+          //                onClick={() => {
+          //                     const event = { target: { name: 'clearAnnotations' } };
+          //                     handleClick(event);
+          //                }}   
+          //           />
+          //      )
+          // },
+          
           
      ]
 

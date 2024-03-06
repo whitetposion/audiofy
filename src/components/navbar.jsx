@@ -10,10 +10,13 @@ import { Tooltip,
 } from "./ui/tooltip";
 import{ Button }from '@/components/ui/button'
 import { ModeToggle } from "@/components/ui/dark-toggle";
-import { AudioLines } from "lucide-react";
+import { AudioLines, Download, Upload } from "lucide-react";
 
 
-const Navbar = () => {
+const Navbar = ({
+     handleClick,
+     disabled
+}) => {
      const { themeMode } = useThemeSettings();
      const {
           theme: {mode, textColor},
@@ -28,6 +31,30 @@ const Navbar = () => {
 
      const [ loading , setLoading] = useState(false);
 
+     const actionButtons = [
+          {
+               name: 'upload',
+               icon : (
+                    <Upload
+                         onClick={() => {
+                              const event = { target: { name: 'upload' } };
+                              handleClick(event);
+                         }}   
+                    />
+               )
+          },
+          {
+               name: 'download',
+               icon : (
+                    <Download
+                         onClick={() => {
+                              const event = { target: { name: 'download' } };
+                              handleClick(event);
+                         }}   
+                    />
+               )
+          }
+     ]
      return (
           <div className= "grow h-12 p-2">
                <div 
@@ -68,25 +95,31 @@ const Navbar = () => {
                          </TooltipProvider>
                     </div>
                     <div className="flex items-center justify-between gap-6 px-6">
-                         {loading ? (
-                              <ColorRing
-                                   visible={true}
-                                   height={20}
-                                   width={20}
-                                   ariaLabel="blocks-loading"
-                                   wrapperStyle={{}}
-                                   wrapperClass="blocks-wrapper"
-                                   colors={['#1860aa', '#1860aa', '#1860aa', '#1860aa', '#1860aa']}
-                              />
-                         ) : (
-                              <Button
-                                   style={{color: textColor }}
-                                   variant = "text"
-                                   onClick ={()=> {}}
-                              > 
-                                   Load Demo
-                              </Button>
-                         )}
+                         {actionButtons.map((button, index) => {
+                              const { name , icon } = button;
+                              let toBeDisabled = disabled;
+                              if( name === 'upload'){
+                                   toBeDisabled = false;
+                              }
+                              return (
+                                   <span>
+                                        <Button
+                                             disabled={toBeDisabled}
+                                             name = {name}
+                                             variant = "text"
+                                             onClick = {handleClick}
+                                             className = {cn(`
+                                                  cursor-pointer
+                                                  scale-120 
+                                                  ${mode === 'light' ? 'text-dark hover:scale-120' : 'text-white hover:scale-120 '}
+                                                  duration-25
+                                                  `)}
+                                        >
+                                             {icon}
+                                        </Button>
+                                   </span>
+                              )
+                         })}
                          <ModeToggle/>
 
                     </div>

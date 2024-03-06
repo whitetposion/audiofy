@@ -13,6 +13,7 @@ import DialogBox from './components/dialog-box';
 import EditorButtons from './components/EditorButtons/EditorButtons';
 import CustomTimeLine from './components/audiobar/CustomAudioBar';
 import { dark, light } from './theme';
+import Instrumentals from './components/Instrumental/Instruments';
 
 const  Editor = () => {
 
@@ -285,7 +286,10 @@ const actions = [
         `}
         style={{ backgroundColor: backgroundColor, color: textColor}}
     >
-        <Navbar/>
+        <Navbar
+          handleClick = {handleClick}
+          disabled={allButtons}
+        />
         {dialogBox && <DialogBox open={dialogBox} />}
         <EditorButtons
           handleClick={handleClick}
@@ -294,6 +298,7 @@ const actions = [
           splitButton ={ enableSplit}
           enableAnnotations={ enableAnnotations}
         />
+        <Instrumentals handleUpload={handleUpload} />
         <div className='flex flex-col'>
           <input
             ref={uploadRef}

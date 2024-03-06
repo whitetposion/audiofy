@@ -14,7 +14,7 @@ const CustomTimeLine = ({bottom , ee}) => {
 
      const { theme , keyPress} = useThemeSettings();
      const { key , shiftKey , code } = keyPress;
-     const { textColor } = theme;
+     const { textColor, backgroundColor } = theme;
 
      const [duration , setDuration ] = useState('00.00.00');
 
@@ -66,7 +66,7 @@ const CustomTimeLine = ({bottom , ee}) => {
                var newSeeked = secondToHMS(start)
                setDpseeker(()=> newSeeked)
           })
-          ee.on('finishedPlaying', ()=> {
+          ee.on('fnishedPlaying', ()=> {
                setDpseeker(()=> '00.00.00');
                setSeeker(()=> 0);
                setIsplaying(!isPlaying);
@@ -87,9 +87,9 @@ const CustomTimeLine = ({bottom , ee}) => {
           }
      },[key, code , shiftKey])
      return (
-          <div className={`w-full fixed  left-0 ${bottom === 0 ? 'bottom-0' :'-bottom-full'} py-6 px-10`}>
+          <div className={`w-full fixed  z-20 left-0 ${bottom === 0 ? 'bottom-0' :'-bottom-full'} py-6 px-10 bg-[${backgroundColor}]`}>
                <div 
-                    className={`flex justify-between items-center gap-2 h-30 backdrop-blur-md rounded-3xl duration-70 bg-${bottom === 0 ? 'trasparent': 'white'}
+                    className={`flex justify-between items-center gap-2 h-30  rounded-3xl duration-70 
                          py-0 px-${bottom === 0 ? '8px' : '300px'}
                     `}
                >
@@ -104,9 +104,9 @@ const CustomTimeLine = ({bottom , ee}) => {
                                         }} 
                                    >
                                         {!isPlaying ? (
-                                             <Play size={30} className={`text-${textColor === "light"? 'white': 'dark'}`}/>
+                                             <Play size={30} className={`text-[${textColor}]`}/>
                                         ):(
-                                             <Pause size={30} className={`text-${textColor === "light"? 'white': 'dark'}`}/>
+                                             <Pause size={30} className={`text-[${textColor}]`}/>
                                         )
 
                                         }
@@ -118,18 +118,18 @@ const CustomTimeLine = ({bottom , ee}) => {
                          </Tooltip>
                     </TooltipProvider>
 
-                    <div className="w-24 h-full flex justify-center items-center bg-transparent">
-                         <h3 className={`font-semibold text-${textColor === 'light' ? 'white' : 'dark'}`}>
+                    <div className={`w-24 h-full flex justify-center items-center bg-[${backgroundColor}]`}>
+                         <h3 className={`font-semibold text-[${textColor}]`}>
                               {dpSeeKer}
                          </h3>
                     </div>
                     <div className="flex-1">
                          <input
                               type = {'range'}
-                              className= { `audioBar ${textColor}`}
+                              className= { `audioBar text-[${textColor}]`}
                               min={0}
                               max={rawValue}
-                              step={0.0001}
+                              step={0.01}
                               value={seeker}
                               onChange={(e) => {
                                    const {
@@ -139,8 +139,8 @@ const CustomTimeLine = ({bottom , ee}) => {
                               }}
                          />
                     </div>
-                    <div className="w-24 h-full flex justify-center items-center bg-transparent">
-                         <h3 className={`font-semibold text-${textColor === 'light' ? 'white' : 'dark'}`}>
+                    <div className="w-24 h-full flex justify-center items-center">
+                         <h3 className={`font-semibold text-${textColor}`}>
                               {duration}
                          </h3>
                     </div> 
