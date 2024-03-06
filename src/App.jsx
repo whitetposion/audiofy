@@ -28,8 +28,7 @@ const  Editor = () => {
     setDialogBox
   } = useThemeSettings();
 
-  const { backgroundColor , textColor } = theme;
-  
+  const { mode , backgroundColor , textColor } = theme;
   const initailState = {
     ee: new EventEmitter(),
     toneCtx: Tone.getContext(),
@@ -119,14 +118,11 @@ const actions = [
             waveHeight:100,
             isAutomaticScroll:true,
             timescale: false,
-            barGap: 1,
+            barGap: 2,
             colors: {
-              waveOutlineColor: `${backgroundColor === 'light'? light : dark}`,
-              timeColor: '#ffffff',
+              waveOutlineColor:backgroundColor,
+              timeColor: dark,
               fadeColor: 'grey',
-              customClass: {
-                color: 'white'
-              }
             },
             controls: {
               show: true,
@@ -205,7 +201,6 @@ const actions = [
         });
 
         playlist.initExporter();
-        console.log(">>>>>>Loaaso")
         setEventEmitter(ee)
       }
     }, [ee, toneCtx]
@@ -271,7 +266,13 @@ const actions = [
     }
   }
 
+  useEffect(()=>{
+    var playlistDiv = document.querySelector('#editor .playlist');
+    if (playlistDiv) {
+        playlistDiv.className = `playlist ${mode}`;
+    }
 
+  },[backgroundColor])
 
   return (
     <div className = {
@@ -313,8 +314,7 @@ const actions = [
         <div
             ref={container}
             onDragOver={() => console.log('ure dragging')}
-            id={'editor'}
-            className={`text-${textColor === 'light' ? light: dark}`}
+            id={`editor`}
           > 
         </div>
 

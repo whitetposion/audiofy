@@ -35,12 +35,11 @@ const Navbar = () => {
                     style={{backgroundColor: mode === "light" ? light:dark}}
                >
                     <div className= "flex justify-between items-center h-full gap-2 px-6"
-                         style={{color: textColor === "light" ? light: dark}}
                     >
                          <AudioLines size={20}/>
                          <p 
                               className= "font-semibold text-3xl"
-                              style={{color: textColor === "light" ? light: dark}}
+                              style={{color: textColor }}
                          >
                               Audiofy
                          </p>
@@ -53,7 +52,7 @@ const Navbar = () => {
                                              type="text"
                                              value ={ podcast}
                                              className="text-xl border-none bg-transparent outline-none"
-                                             style={{color: textColor === "light" ? light: dark}}
+                                             style={{color: textColor}}
                                              onChange={(e) =>{
                                                   const {
                                                        target: {value},
@@ -81,8 +80,8 @@ const Navbar = () => {
                               />
                          ) : (
                               <Button
-                                   style={{color: textColor === "light" ? light: dark}}
-                                   variant = "ghost"
+                                   style={{color: textColor }}
+                                   variant = "text"
                                    onClick ={()=> {}}
                               > 
                                    Load Demo

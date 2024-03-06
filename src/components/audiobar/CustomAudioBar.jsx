@@ -98,12 +98,12 @@ const CustomTimeLine = ({bottom , ee}) => {
                               <TooltipTrigger asChild>
                                    <div
                                         ref={playRef}
-                                        onCanPlay={()=>{
+                                        onClick={()=>{
                                              setIsplaying(!isPlaying);
-                                             isPlaying? ee.emit('play'): ee.emit('pause')
+                                             isPlaying? ee.emit('pause'): ee.emit('play')
                                         }} 
                                    >
-                                        {isPlaying ? (
+                                        {!isPlaying ? (
                                              <Play size={30} className={`text-${textColor === "light"? 'white': 'dark'}`}/>
                                         ):(
                                              <Pause size={30} className={`text-${textColor === "light"? 'white': 'dark'}`}/>

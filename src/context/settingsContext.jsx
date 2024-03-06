@@ -17,9 +17,9 @@ const SETDIALOGBOX = 'SETDIALOGBOX';
 const initailState = {
      podcast: 'Podcast',
      theme: {
-          mode: 'dark',
-          backgroundColor: dark,
-          textColor: 'light'
+          mode: 'light',
+          backgroundColor: light,
+          textColor: dark
      },
      contextMenu: {
           clientX: 0,
@@ -44,12 +44,12 @@ function reducer(state , action){
           case THEME_DARK:
                return {
                     ...state,
-                    theme: {mode:'dark', backgroundColor: dark , textColor: 'light'},
+                    theme: {mode:'dark', backgroundColor: dark , textColor: light},
                };
           case THEME_LIGHT:
                return {
                     ...state,
-                    theme: {mode:'light', backgroundColor: light , textColor: 'dark'},
+                    theme: {mode:'light', backgroundColor: light , textColor: dark},
                };
           case CONTEXT_MENU:
                return {
@@ -148,6 +148,30 @@ export const SettingContext = ({ children}) => {
      };
 
      ///insert useEffect later here
+     useEffect(() => {
+          // context menu event listener
+          const editor = document.getElementById('editor');
+          editor.oncontextmenu = (e) => {
+            e.preventDefault();
+            const { clientX, clientY } = e;
+            const display = true;
+            const value = { clientX, clientY, display };
+            dispatch({
+              type: CONTEXT_MENU,
+              payload: value,
+            });
+          };
+      
+          // on key press event listener
+          window.onkeydown = (event) => {
+            const { key, shiftKey, code } = event;
+               console.log("padsojowfowefj")
+            dispatch({
+              type: KEY_PRESS,
+              payload: { key, shiftKey, code },
+            });
+          };
+        }, []);
 
      const {
           theme : {mode , backgroundColor},
