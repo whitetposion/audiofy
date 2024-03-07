@@ -137,10 +137,32 @@
         background-color: #1C1917;
         #remove {
           position: relative;
-          content: url('utils/trash.svg');
           padding: 0.25rem;
-          color: white;
+          &::before,
+          &::after {
+            content: '';
+            position: absolute;
+            background-color: rgb(244, 59, 59);
+          }
+
+          &::before {
+            width: 60%;
+            height: 10%;
+            top: 45%;
+            left: 20%;
+            transform: rotate(45deg);
+          }
+
+          &::after {
+            width: 60%;
+            height: 10%;
+            top: 45%;
+            left: 20%;
+            transform: rotate(-45deg);
+          }
         }
+      
+        
 
         .track-header {
           overflow: hidden;
@@ -561,9 +583,28 @@
       #remove {
         position: relative;
         padding: 0.25rem;
-      }
-      #remove::before{
-        content: url(utils/trash.svg);
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          background-color: rgb(244, 59, 59);
+        }
+
+        &::before {
+          width: 60%;
+          height: 10%;
+          top: 45%;
+          left: 20%;
+          transform: rotate(45deg);
+        }
+
+        &::after {
+          width: 60%;
+          height: 10%;
+          top: 45%;
+          left: 20%;
+          transform: rotate(-45deg);
+        }
       }
 
       .track-header {
