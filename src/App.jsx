@@ -1,22 +1,24 @@
-import './App.css';
-import { useCallback, useEffect, useReducer, useRef } from "react";
+// Global import 
 import EventEmitter from 'event-emitter';
 import ReactStudio from 'react-studio-js'
 import * as Tone from 'tone'
 import { v4 as uuidv4} from 'uuid'
 import { saveAs } from 'file-saver'
+import { useCallback, useEffect, useReducer, useRef } from "react";
 
-import { PLAYLIST, SET_BUTTONS, SET_ENABLE_CUT, SET_ENABLE_SPLIT, reducer } from './reducer';
-import { useThemeSettings } from './hooks/use-theme-settings';
-import Navbar from './components/navbar';
-import DialogBox from './components/dialog-box';
-import EditorButtons from './components/EditorButtons/EditorButtons';
-import CustomTimeLine from './components/audiobar/CustomAudioBar';
-import { dark, light } from './theme';
-import Instrumentals from './components/Instrumental/Instruments';
+// Local imports
+import './App.css';
+import Navbar from '@/components/navbar';
+import DialogBox from '@/components/dialog-box';
+import EditorButtons from '@/components/EditorButtons/EditorButtons';
+import CustomTimeLine from '@/components/audiobar/CustomAudioBar';
+import Instrumentals from '@/components/Instrumental/Instruments';
+import { PLAYLIST, SET_BUTTONS, SET_ENABLE_CUT, SET_ENABLE_SPLIT, reducer } from '@/reducer';
+import { useThemeSettings } from '@/hooks/use-theme-settings';
+import { dark, light } from '@/theme';
 
 const  Editor = () => {
-
+  // use context for getting states and functions
   const {
     theme,
     setEventEmitter,
@@ -30,6 +32,7 @@ const  Editor = () => {
   } = useThemeSettings();
 
   const { mode , backgroundColor , textColor } = theme;
+
   const initailState = {
     ee: new EventEmitter(),
     toneCtx: Tone.getContext(),
@@ -43,6 +46,7 @@ const  Editor = () => {
   }
 
   const [ state, dispatch] = useReducer(reducer, initailState)
+
   const {
     ee,
     toneCtx,
@@ -55,7 +59,7 @@ const  Editor = () => {
   } = state
   
 
-
+// Todo, handle annotations
   function handleAnnUpload(event){
     const file = event.target.files[0];
     if(!file){
@@ -63,7 +67,8 @@ const  Editor = () => {
     }
     uploadAnnRef.current.value = '';
   }
-const actions = [
+  // Todo integrate actions with the react studio 
+  const actions = [
     {
       class: 'fas.fa-play',
       title: 'Play Annotation',
@@ -106,6 +111,9 @@ const actions = [
     },
   ];
 // ============> React-studio <=======================>
+// container is defined and it only takes const variable 
+// To not do: trying to change the color or value dynamically 
+// once container reference is create we can not manupilate it excepts events
   const container = useCallback(
     (node) => {
       if(node !== null && toneCtx !== null){
@@ -206,6 +214,8 @@ const actions = [
       }
     }, [ee, toneCtx]
   )
+
+  // File uploads are handle here we can also use events directly
   function handleUpload(event){
     const file = event.target.files[0]
     if(!file){
@@ -216,9 +226,11 @@ const actions = [
       name: file.name,
       id: uuidv4(),
     });
+    // removing ref once the tracks is loaded
     uploadRef.current.value = '';
   }
 
+  // we pass the function to component instead of rewriting events in every components
   function handleClick(event) {
     const { name } = event.target;
 
@@ -267,6 +279,8 @@ const actions = [
     }
   }
 
+  // To manage the dark and light mode we use queryselector to update classname
+  // since we dont have controls over them
   useEffect(()=>{
     var playlistDiv = document.querySelector('#editor .playlist');
     if (playlistDiv) {
@@ -276,21 +290,16 @@ const actions = [
   },[backgroundColor])
 
   return (
-    <div className = {
-        `
-        pt-0.5
-        overflow-y-auto
-        overflow-x-hidden
-        h-screen
-        w-screen
-        `}
+    <div className = {`pt-0.5 overflow-y-auto overflow-x-hidden h-screen w-screen`}
         style={{ backgroundColor: backgroundColor, color: textColor}}
     >
         <Navbar
           handleClick = {handleClick}
           disabled={allButtons}
         />
-        {dialogBox && <DialogBox open={dialogBox} />}
+
+        <DialogBox open={dialogBox} />
+
         <EditorButtons
           handleClick={handleClick}
           cutButton= { enableCut}
@@ -298,7 +307,9 @@ const actions = [
           splitButton ={ enableSplit}
           enableAnnotations={ enableAnnotations}
         />
+
         <Instrumentals handleUpload={handleUpload} />
+
         <div className='flex flex-col'>
           <input
             ref={uploadRef}
@@ -316,6 +327,7 @@ const actions = [
             className='hidden'
           />
         </div>
+        
         <div
             ref={container}
             onDragOver={() => console.log('ure dragging')}

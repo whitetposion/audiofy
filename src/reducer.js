@@ -3,6 +3,8 @@ export const SET_ENABLE_CUT = 'SETENABLECUT';
 export const SET_ENABLE_SPLIT = 'SETENABLESPLIT';
 export const PLAYLIST = 'PLAYLIST';
 
+// For getting the functionality of the button (disabled or active) 
+
 export function reducer(state , action){
      const { type , payload} = action;
      switch (type){

@@ -1,7 +1,15 @@
-import { useThemeSettings } from "@/hooks/use-theme-settings"
 import { AArrowDown, CaseUpper, ChevronsLeftRight, Download, GripHorizontal, MessageSquareOff, MousePointer2, MoveDownLeft, MoveDownRight, Scissors, Split, Upload, ZoomIn, ZoomOut } from "lucide-react";
-import { Button } from "../ui/button";
+
+import { useThemeSettings } from "@/hooks/use-theme-settings"
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { 
+     Tooltip, 
+     TooltipProvider, 
+     TooltipTrigger, 
+     TooltipContent 
+} from "@/components/ui/tooltip";
+
 const EditorButtons = ({
      handleClick,
      cutButton,
@@ -90,28 +98,28 @@ const EditorButtons = ({
                     />
                )
           },
-          {
-               name: 'zoomin',
-               icon : (
-                    <ZoomIn
-                         onClick={() => {
-                              const event = { target: { name: 'zoomin' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
-          {
-               name: 'zoomout',
-               icon : (
-                    <ZoomOut
-                         onClick={() => {
-                              const event = { target: { name: 'zoomout' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
+          // {
+          //      name: 'zoomin',
+          //      icon : (
+          //           <ZoomIn
+          //                onClick={() => {
+          //                     const event = { target: { name: 'zoomin' } };
+          //                     handleClick(event);
+          //                }}   
+          //           />
+          //      )
+          // },
+          // {
+          //      name: 'zoomout',
+          //      icon : (
+          //           <ZoomOut
+          //                onClick={() => {
+          //                     const event = { target: { name: 'zoomout' } };
+          //                     handleClick(event);
+          //                }}   
+          //           />
+          //      )
+          // },
           // {
           //      name: 'addAnnotations',
           //      icon : (
@@ -170,22 +178,31 @@ const EditorButtons = ({
                          toBeDisabled = enableAnnotations;
                     }
                     return (
-                         <span>
-                              <Button
-                                   disabled={toBeDisabled}
-                                   name = {name}
-                                   variant = "text"
-                                   onClick = {handleClick}
-                                   className = {cn(`
-                                        cursor-pointer
-                                        scale-120 
-                                        ${mode === 'light' ? 'text-dark hover:scale-120' : 'text-white hover:scale-120 '}
-                                        duration-25
-                                        `)}
-                              >
-                                   {icon}
-                              </Button>
-                         </span>
+                         <TooltipProvider>
+                              <Tooltip>
+                                   <TooltipTrigger>
+                                        <span>
+                                             <Button
+                                                  disabled={toBeDisabled}
+                                                  name = {name}
+                                                  variant = "text"
+                                                  onClick = {handleClick}
+                                                  className = {cn(`
+                                                       cursor-pointer
+                                                       scale-120 
+                                                       ${mode === 'light' ? 'text-dark hover:scale-120' : 'text-white hover:scale-120 '}
+                                                       duration-25
+                                                       `)}
+                                             >
+                                                  {icon}
+                                             </Button>
+                                        </span>
+                                   </TooltipTrigger>
+                                   <TooltipContent>
+                                        <p>{name}</p>
+                                   </TooltipContent>
+                              </Tooltip>
+                         </TooltipProvider>
                     )
                })}
 

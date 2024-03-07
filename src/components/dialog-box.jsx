@@ -1,4 +1,5 @@
 import { Bars } from "react-loader-spinner";
+
 import { dark, light } from "@/theme";
 import { useThemeSettings } from "@/hooks/use-theme-settings";
 
@@ -20,6 +21,9 @@ const DialogBox = ({ open }) => {
     backgroundColor: backgroundColor
   };
 
+  if (!open){
+    return null
+  }
   return (
     <div style={dialogStyle}>
       <div>

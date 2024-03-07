@@ -1,20 +1,25 @@
 import { createContext, useEffect ,useReducer } from "react";
-import { dark , light} from '../theme/index'
+import { dark , light} from '@/theme/index'
 
 const THEME_DARK = 'THEME_DARK';
 const THEME_LIGHT = 'THEME_LIGHT';
-
-const CONTEXT_MENU = 'CONTEXT_MENU';
-const CLOSE_CONTEXT_MENU = 'CLOSE_CONTEXT_MENU';
 const KEY_PRESS = 'KEY_PRESS';
 const EVENT_EMITTER = 'EVENT_EMITTER';
 const PROJECT_TITLE = 'PROJECT_TITLE';
+const SETDIALOGBOX = 'SETDIALOGBOX';
+// currently not using ===>
+
+const CONTEXT_MENU = 'CONTEXT_MENU';
+const CLOSE_CONTEXT_MENU = 'CLOSE_CONTEXT_MENU';
 const SETSHOWANNOTATIONS = 'SETSHOWANNOTATIONS';
 const SETENEABLEANNOTATIONS = 'SETENEABLEANNOTATIONS';
 const ANNOTATIONS = 'ANNOTATIONS';
-const SETDIALOGBOX = 'SETDIALOGBOX';
 
+// <========== currently not using 
+
+// saving the display theme locally
 const mode = localStorage.getItem('mode')
+
 const initailState = {
      project: '',
      theme: {
@@ -86,7 +91,7 @@ function reducer(state , action){
           
      }
 }
-
+ 
 const ThemeSettings = createContext({
      ...initailState,
 })
@@ -150,9 +155,7 @@ export const SettingContext = ({ children}) => {
           });
      };
 
-     ///insert useEffect later here
      useEffect(() => {
-          // context menu event listener
           const editor = document.getElementById('editor');
           editor.oncontextmenu = (e) => {
             e.preventDefault();
@@ -164,7 +167,6 @@ export const SettingContext = ({ children}) => {
               payload: value,
             });
           };
-      
           // on key press event listener
           window.onkeydown = (event) => {
             const { key, shiftKey, code } = event;
@@ -173,21 +175,12 @@ export const SettingContext = ({ children}) => {
               payload: { key, shiftKey, code },
             });
           };
-        }, []);
+     }, []);
 
      const {
-          theme : {mode , backgroundColor},
+          theme : {mode ,textColor, backgroundColor},
      } = state
      
-     // const theme = ({
-     //      palette :{
-     //           mode,
-     //           background : {
-     //                default: backgroundColor
-     //           },
-     //      },
-     // });
-
      return (
           <ThemeSettings.Provider
                value={{

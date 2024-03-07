@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { useThemeSettings } from "../hooks/use-theme-settings"
-import { dark, light } from "../theme";
+import { AudioLines, Download, Upload } from "lucide-react";
 import { Bars, ColorRing } from "react-loader-spinner";
-import { Tooltip,
-          TooltipContent,
-          TooltipProvider,
-          TooltipTrigger,
-} from "./ui/tooltip";
+
+import { 
+     Tooltip,
+     TooltipContent,
+     TooltipProvider,
+     TooltipTrigger,
+} from "@/components/ui/tooltip";
 import{ Button }from '@/components/ui/button'
 import { ModeToggle } from "@/components/ui/dark-toggle";
-import { AudioLines, Download, Upload } from "lucide-react";
-import { AlertModal } from "./modal/alert-modal";
+import { AlertModal } from "@/components/modal/alert-modal";
+import { useThemeSettings } from "@/hooks/use-theme-settings"
+import { dark, light } from "@/theme";
+import { cn } from "@/lib/utils";
 
 
 const Navbar = ({
@@ -19,7 +21,7 @@ const Navbar = ({
      disabled
 }) => {
      const {
-          theme: {mode, textColor},
+          theme: {mode, textColor, backgroundColor},
           themeMode,
           changeTitle,
           project,
@@ -31,6 +33,8 @@ const Navbar = ({
      } = useThemeSettings();
 
      const [isModalOpen, setIsModalOpen] = useState(false)
+
+     // refresh the window since we dont have dynamic background color feasible
      const onConfirm = () => {
           if (mode === 'light') themeMode('dark');
           else themeMode('light')
@@ -39,7 +43,7 @@ const Navbar = ({
      }
 
      const [ loading , setLoading] = useState(false);
-
+ 
      const actionButtons = [
           {
                name: 'upload',
@@ -67,15 +71,13 @@ const Navbar = ({
      return (
           <div className= "grow h-12 p-2">
                <div 
-                    className="static z-10  flex justify-between items-center"
-                    style={{backgroundColor: mode === "light" ? light:dark}}
+                    className={`static z-10  flex justify-between items-center bg-[${backgroundColor}]`}
                >
                     <div className= "flex justify-between items-center h-full gap-2 px-6"
                     >
                          <AudioLines size={20}/>
                          <p 
-                              className= "font-semibold text-3xl"
-                              style={{color: textColor }}
+                              className= {`font-semibold text-3xl bg-[${textColor}]`}
                          >
                               Audiofy
                          </p>
@@ -137,11 +139,9 @@ const Navbar = ({
                               isOpen={isModalOpen}
                               onConfirm = {onConfirm}
                               onClose={()=> setIsModalOpen(false)}
+                              loading={loading}
                          />
-
                     </div>
-
-
                </div>
           </div>
      )

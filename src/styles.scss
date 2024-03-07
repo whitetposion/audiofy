@@ -1,3 +1,7 @@
+//    Scss is only used for HTML element which are not controlled in this project
+//    div having Editor ID contains playlist classname 
+//    so here we controll the dark and light mode 
+
 .playlist.dark {
      *,
       ::after,
@@ -23,7 +27,6 @@
    
       .btn-outline-dark {
          color: white;
-        // insert black and white
       }
    
       .btn-outline-dark:hover {
@@ -33,8 +36,8 @@
    
       .btn-outline-dark:active:focus,
       .btn-outline-dark:focus {
-          background: #4fa1ed;
-          color: rgb(55, 17, 192);
+        background: #4fa1ed;
+        color: rgb(55, 17, 192);
       }
    
       .btn-xs {
@@ -72,76 +75,70 @@
       }
    
    
-     // Audio wave color
+      // Audio wave color
       .channel {
         background-color: #f3f4f9;
       }
    
-     // progressed audio
-     .channel-progress {
-       // background: var(--wp-channel-progress-color);
-        background: #28ce88;
-      //background-color: grey;
-       // background: #ff9777;
-       // background: #5d35b1;
-     }
-   
-     .cursor {
-       // background: var(--wp-cursor-color);
-       background: #ff9777;
-   
-     }
-   
-     .wp-fade {
-       background-color: var(--wp-fade-background-color);
-     }
-   
-     .state-cursor,
-     .state-select {
-       cursor: text;
-     }
-   
-     .state-fadein {
-       cursor: w-resize;
-     }
-   
-     .state-fadeout {
-       cursor: e-resize;
-     }
-   
-     .state-shift {
-       cursor: ew-resize;
-     }
-   
-     .selection.point {
-       // background: var(--wp-selection-point-color);
-       // background: #ff9777;
-       background: #5d35b1
-   
-   
-   
-     }
-   
-     .selection.segment {
-       background: var(--wp-selection-background-color);
-     }
-   
-     .channel-wrapper.silent .channel {
-       opacity: 0.3;
-     }
-   
+      // progressed audio
+      .channel-progress {
+          background: #28ce88;
+      }
+      // user interaction cursor 
+      .cursor {
+        background: #ff9777;
+    
+      }
+    
+      // .wp-fade {
+      //   background-color: var(--wp-fade-background-color);
+      // }
+    
+      .state-cursor,
+      .state-select {
+        cursor: text;
+      }
+    
+      .state-fadein {
+        cursor: w-resize;
+      }
+    
+      .state-fadeout {
+        cursor: e-resize;
+      }
+    
+      .state-shift {
+        cursor: ew-resize;
+      }
+    
+      .selection.point {
+          background: #5d35b1
+    
+    
+    
+      }
+      // Selected region get highlighted 
+      .selection.segment {
+        background: rgb(138, 237, 138);
+        opacity: 0.1;
+      }
+      // For changing styling of Muted tracks
+      .channel-wrapper.silent .channel {
+        opacity: 0.3;
+      }
+      // Controls present on left side tracks 
       .controls {
         text-align: center;
         border: none;
         padding: 8px;
         background-color: #1C1917;
+
+        // Delete tracks button
         #remove {
           position: relative;
           padding: 0.25rem;
           content: url(/utils/trash.svg);
         }
-      
-        
 
         .track-header {
           overflow: hidden;
@@ -186,7 +183,7 @@
           font-size: 18px;
           padding-left: 5px;
         }
-   
+        // slider for volume 
         label.volume:before {
           content: "-";
           color: white;
@@ -196,7 +193,7 @@
           content: "+";
           color: white;
         }
-   
+        // slider for stereo 
         label.stereopan:before {
           color:white;
           content: "L";
@@ -207,6 +204,7 @@
           content: "R";
         }
     
+        // range slider
         input[type="range"] {
           -webkit-appearance: none;
           -moz-appearance: none;
@@ -235,11 +233,9 @@
           -webkit-appearance: none;
           -moz-appearance: none;
           appearance: none;
-    
           border: none;
           height: 14px;
           width: 3px;
-          // background: var(--wp-range-slider-color);
           background: #1976d2;
           margin-top: -7px;
           cursor: ew-resize;
@@ -249,12 +245,9 @@
           -webkit-appearance: none;
           -moz-appearance: none;
           appearance: none;
-    
           border: none;
           height: 14px;
           width: 3px;
-          
-          // background: var(--wp-range-slider-color);
           background: var(--wp-range-slider-color);
           margin-top: -7px;
           cursor: ew-resize;
@@ -265,168 +258,16 @@
         }
     
         input[type="range"]:focus::-webkit-slider-runnable-track {
-          // background: var(--wp-range-slider-background-focus-color);
           background: #2499ef;
         }
     
         input[type="range"]:focus::-moz-range-track {
-          // background: var(--wp-range-slider-background-focus-color);
           background: #2499ef;
         }
-    
-        // input[type="range"]:focus::-webkit-slider-thumb {
-        //   border: 2px solid var(--wp-range-slider-focus-color);
-        // }
-    
-        // input[type="range"]:focus::-moz-range-thumb {
-        //   border: 2px solid var(--wp-range-slider-focus-color);
-        // }
       }
-      
-   
-      .annotations {
-        .annotations-boxes {
-          text-align: center;
-        }
-    
-        .annotation-box {
-          border: 1px solid var(--wp-annotation-box-border-color);
-          padding: 0 10px;
-          line-height: 1.5;
-          border-radius: 8px;
-          overflow: hidden;
-    
-          .resize-handle {
-            background: var(--wp-annotation-box-border-color);
-            opacity: 0.3;
-            cursor: ew-resize;
-            border-radius: 8px;
-          }
-        
-    
-          .id {
-            cursor: pointer;
-            display: inline-block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-    
-        .annotations-text {
-          font-size: 19px;
-          font-weight: 300;
-          margin-top: 1em;
-          height: 160px;
-          overflow-x: hidden;
-          overflow-y: auto;
-    
-          .annotation {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-            align-items: stretch;
-    
-            span {
-              margin: 0.3rem 0.6rem;
-    
-              &:last-of-type {
-                margin-right: 1.2rem;
-              }
-            }
-    
-            .annotation-id {
-              font-size: 16px;
-              line-height: 27px;
-            }
-    
-            .annotation-start {
-              font-size: 16px;
-              line-height: 27px;
-            }
-    
-            .annotation-end {
-              font-size: 16px;
-              line-height: 27px;
-            }
-    
-            .annotation-lines {
-              flex-grow: 10;
-    
-            }
-    
-            .annotation-actions {
-              // flex-basis: auto;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: center;
-              width: 65;
-              text-align: right;
-              font-size: 16px;
-    
-              i {
-                margin-right: 0.6rem;
-    
-                &:last-of-type {
-                  margin-right: 0;
-                }
-    
-                &:hover {
-                  // color: var(--wp-annotation-icon-hover-color);
-                  color: white;
-                  cursor: pointer;
-                  scale: 1.1;
-                  transition: .3s;
-                }
-              }
-            }
-          }
-        }
-   
-       .current {
-         background-color: var(--wp-annotation-current-background-color);
-       }
-     }
-   }
-   
-   /* Firefox */
-   #editor * {
-     scrollbar-width: none;
-     // scrollbar-color: #397524 #dfe9eb;
-   }
-   /* Chrome, Edge and Safari */
-   #editor *::-webkit-scrollbar {
-     display: none;
-     height: 10px;
-     width: 10px;
-   }
-   #editor *::-webkit-scrollbar-track {
-   
-     background-color: transparent;
-   }
-   #editor *::-webkit-scrollbar-track:hover {
-   
-     background-color: transparent;
-   }
-   #editor *::-webkit-scrollbar-track:active {
-   
-     background-color: transparent;
-   }
-   #editor *::-webkit-scrollbar-thumb {
-     border-radius: 32px;
-     background-color: #2499ef;
-   
-   }
-   #editor *::-webkit-scrollbar-thumb:hover {
-     background-color: #2499ef;
-   }
-   #editor *::-webkit-scrollbar-thumb:active {
-     background-color: #0d3e62;
-   }
+}
 
-
-  .playlist.light {
+.playlist.light {
   *,
     ::after,
     ::before {
@@ -501,24 +342,24 @@
     }
 
 
-  // Audio wave color
+    // Audio wave color
     .channel {
       background-color: black;
     }
 
-  // progressed audio
-  .channel-progress {
+    // progressed audio
+    .channel-progress {
       background: #01f726;
-  }
+    }
+    // cursor for user interaction
+    .cursor {
+      background: #f51f1f;
 
-  .cursor {
-    background: #f51f1f;
+    }
 
-  }
-
-  .wp-fade {
-    background-color: var(--wp-fade-background-color);
-  }
+    // .wp-fade {
+    //   background-color: var(--wp-fade-background-color);
+    // }
 
   .state-cursor,
   .state-select {
@@ -538,18 +379,14 @@
   }
 
   .selection.point {
-    // background: var(--wp-selection-point-color);
-    // background: #ff9777;
     background: #5d35b1
-
-
-
   }
-
+  // region (selected) area 
   .selection.segment {
-    background: var(--wp-selection-background-color);
+    background-color: #01f726;
+    opacity: 0.5;
   }
-
+  // Muted audio track
   .channel-wrapper.silent .channel {
     opacity: 0.5;
   }
@@ -559,6 +396,8 @@
       border: none;
       padding: 8px;
       background-color: #f3f4f9;
+
+      // Delete track
       #remove {
         position: relative;
         padding: 0.25rem;
@@ -604,13 +443,12 @@
         padding-right: 5px;
         -moz-osx-font-smoothing: grayscale;
       }
-
       label:after {
         color: #1C1917;
         font-size: 18px;
         padding-left: 5px;
       }
-
+      // volume controls
       label.volume:before {
         content: "-";
         color: #1C1917;
@@ -623,17 +461,17 @@
         content: "+";
         color: #1C1917;
       }
-
+      // stereo controls
       label.stereopan:before {
         color:#1C1917;
         content: "L";
       }
-  
+
       label.stereopan:after {
         color: #1C1917;
         content: "R";
       }
-  
+      // controls sliders
       input[type="range"] {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -650,7 +488,7 @@
         border: none;
         border-radius: 3px;
       }
-  
+
       input[type="range"]::-moz-range-track {
         height: 5px;
         background: gray;
@@ -662,11 +500,9 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-  
         border: none;
         height: 14px;
         width: 3px;
-        // background: var(--wp-range-slider-color);
         background: #1976d2;
         margin-top: -7px;
         cursor: ew-resize;
@@ -676,12 +512,9 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-  
         border: none;
         height: 14px;
         width: 3px;
-        
-        // background: var(--wp-range-slider-color);
         background: var(--wp-range-slider-color);
         margin-top: -7px;
         cursor: ew-resize;
@@ -692,134 +525,20 @@
       }
   
       input[type="range"]:focus::-webkit-slider-runnable-track {
-        // background: var(--wp-range-slider-background-focus-color);
         background: #2499ef;
       }
   
       input[type="range"]:focus::-moz-range-track {
-        // background: var(--wp-range-slider-background-focus-color);
+       
         background: #2499ef;
       }
   
-      // input[type="range"]:focus::-webkit-slider-thumb {
-      //   border: 2px solid var(--wp-range-slider-focus-color);
-      // }
-  
-      // input[type="range"]:focus::-moz-range-thumb {
-      //   border: 2px solid var(--wp-range-slider-focus-color);
-      // }
     }
-
-    .annotations {
-      .annotations-boxes {
-        text-align: center;
-      }
-  
-      .annotation-box {
-        border: 1px solid var(--wp-annotation-box-border-color);
-        padding: 0 10px;
-        line-height: 1.5;
-        border-radius: 8px;
-        overflow: hidden;
-  
-        .resize-handle {
-          background: var(--wp-annotation-box-border-color);
-          opacity: 0.3;
-          cursor: ew-resize;
-          border-radius: 8px;
-        }
-      
-  
-        .id {
-          cursor: pointer;
-          display: inline-block;
-          width: 100%;
-          height: 100%;
-        }
-      }
-  
-      .annotations-text {
-        font-size: 19px;
-        font-weight: 300;
-        margin-top: 1em;
-        height: 160px;
-        overflow-x: hidden;
-        overflow-y: auto;
-  
-        .annotation {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: nowrap;
-          justify-content: flex-start;
-          align-items: stretch;
-  
-          span {
-            margin: 0.3rem 0.6rem;
-  
-            &:last-of-type {
-              margin-right: 1.2rem;
-            }
-          }
-  
-          .annotation-id {
-            font-size: 16px;
-            line-height: 27px;
-          }
-  
-          .annotation-start {
-            font-size: 16px;
-            line-height: 27px;
-          }
-  
-          .annotation-end {
-            font-size: 16px;
-            line-height: 27px;
-          }
-  
-          .annotation-lines {
-            flex-grow: 10;
-  
-          }
-  
-          .annotation-actions {
-            // flex-basis: auto;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 65;
-            text-align: right;
-            font-size: 16px;
-  
-            i {
-              margin-right: 0.6rem;
-  
-              &:last-of-type {
-                margin-right: 0;
-              }
-  
-              &:hover {
-                // color: var(--wp-annotation-icon-hover-color);
-                color: white;
-                cursor: pointer;
-                scale: 1.1;
-                transition: .3s;
-              }
-            }
-          }
-        }
-      }
-
-    .current {
-      background-color: var(--wp-annotation-current-background-color);
-    }
-  }
 }
 
 /* Firefox */
 #editor * {
   scrollbar-width: none;
-  // scrollbar-color: #397524 #dfe9eb;
 }
 /* Chrome, Edge and Safari */
 #editor *::-webkit-scrollbar {

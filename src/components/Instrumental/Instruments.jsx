@@ -1,5 +1,6 @@
 import { Bell, Bomb, Drum } from "lucide-react";
-import { Button } from "../ui/button";
+
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useThemeSettings } from "@/hooks/use-theme-settings";
 

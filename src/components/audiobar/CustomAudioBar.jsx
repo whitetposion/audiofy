@@ -1,27 +1,30 @@
-import { useThemeSettings } from "@/hooks/use-theme-settings"
+import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+
 import { 
      Tooltip,
      TooltipContent,
      TooltipProvider,
      TooltipTrigger
 } from "@/components/ui/tooltip";
-import { Pause, Play } from "lucide-react";
-import './bar.css'
+import { useThemeSettings } from "@/hooks/use-theme-settings"
 import { dark, light } from "@/theme";
+import './bar.css'
 
 const CustomTimeLine = ({bottom , ee}) => {
 
      const { theme , keyPress} = useThemeSettings();
+
      const { key , shiftKey , code } = keyPress;
      const { textColor, backgroundColor } = theme;
 
      const [duration , setDuration ] = useState('00.00.00');
 
-     const [ rawValue , setRawValue ] = useState(0);
+     const [rawValue , setRawValue ] = useState(0);
+
      const [seeker, setSeeker] = useState(0);
 
-     const [ dpSeeKer, setDpseeker] = useState('00.00.00');
+     const [dpSeeKer, setDpseeker] = useState('00.00.00');
 
      const [isPlaying, setIsplaying] = useState(false);
 
@@ -67,6 +70,7 @@ const CustomTimeLine = ({bottom , ee}) => {
                setDpseeker(()=> newSeeked)
           })
           ee.on('fnishedPlaying', ()=> {
+               ee.emit('sliderTimeUpdate', '00.00.00')
                setDpseeker(()=> '00.00.00');
                setSeeker(()=> 0);
                setIsplaying(!isPlaying);
@@ -99,8 +103,8 @@ const CustomTimeLine = ({bottom , ee}) => {
                                    <div
                                         ref={playRef}
                                         onClick={()=>{
+                                             isPlaying? ee.emit('pause'): ee.emit('play');
                                              setIsplaying(!isPlaying);
-                                             isPlaying? ee.emit('pause'): ee.emit('play')
                                         }} 
                                    >
                                         {!isPlaying ? (
