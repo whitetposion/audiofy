@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useThemeSettings } from "@/hooks/use-theme-settings";
 
 const Instrumentals = ({handleUpload}) =>{
-     const { mode, textColor} = useThemeSettings();
+     const { theme: {mode, textColor , backgroundColor}} = useThemeSettings();
      const musics = [
           {
                name: 'Bell',
@@ -37,19 +37,19 @@ const Instrumentals = ({handleUpload}) =>{
      ]
      return (
           <div
-               className="flex grow flex-wrap gap-1 justify-end m-10"
+               className={`flex grow flex-wrap gap-1 justify-end m-10 bg-[${backgroundColor}]`}
           >
                {musics.map((item, key)=>{
                          
                     return(
                          <Button
-                              variant = "ghost"
+                              variant = "outline"
                               onClick = {item.action}
                               className = {cn(`
-                                   cursor-pointer
-                                   scale-120 
-                                   text-${textColor}
-                                   border-${textColor}
+                                   bg-[${backgroundColor}]
+                                   text-[${textColor}]
+                                   hover:[${textColor}]
+     
                                    duration-25
                                    `)}
                          >

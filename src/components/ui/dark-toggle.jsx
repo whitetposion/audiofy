@@ -12,7 +12,7 @@ import { useThemeSettings } from "@/hooks/use-theme-settings"
 import { cn } from "@/lib/utils"
 
 
-export function ModeToggle() {
+export function ModeToggle({setIsModalOpen}) {
   const { theme ,themeMode } = useThemeSettings()
   const { mode, textColor, backgroundColor } = theme
 
@@ -26,10 +26,14 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => themeMode("light")}>
-          Light
+        <DropdownMenuItem 
+          onClick={() => setIsModalOpen(true)}
+        >
+            Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => themeMode("dark")}>
+        <DropdownMenuItem
+          onClick={() => setIsModalOpen(true)}
+        >
           Dark
         </DropdownMenuItem>
       </DropdownMenuContent>

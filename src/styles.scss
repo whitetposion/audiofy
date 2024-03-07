@@ -560,9 +560,10 @@
       background-color: #f3f4f9;
       #remove {
         position: relative;
-        content: url('utils/trash.svg');
         padding: 0.25rem;
-        color: white;
+      }
+      #remove::before{
+        content: url(utils/trash.svg);
       }
 
       .track-header {

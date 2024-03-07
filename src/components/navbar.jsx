@@ -11,23 +11,32 @@ import { Tooltip,
 import{ Button }from '@/components/ui/button'
 import { ModeToggle } from "@/components/ui/dark-toggle";
 import { AudioLines, Download, Upload } from "lucide-react";
+import { AlertModal } from "./modal/alert-modal";
 
 
 const Navbar = ({
      handleClick,
      disabled
 }) => {
-     const { themeMode } = useThemeSettings();
      const {
           theme: {mode, textColor},
+          themeMode,
           changeTitle,
-          podcast,
+          project,
           event_emitter,
           setShowAnnotations,
           setEnableAnnotations,
           setAnnotations,
           setDialogBox
      } = useThemeSettings();
+
+     const [isModalOpen, setIsModalOpen] = useState(false)
+     const onConfirm = () => {
+          if (mode === 'light') themeMode('dark');
+          else themeMode('light')
+          setIsModalOpen(false)
+          window.location.reload()
+     }
 
      const [ loading , setLoading] = useState(false);
 
@@ -77,8 +86,9 @@ const Navbar = ({
                                    <TooltipTrigger>
                                         <input
                                              type="text"
-                                             value ={ podcast}
-                                             className="text-xl border-none bg-transparent outline-none"
+                                             value ={ project}
+                                             className="w-25 border-none bg-transparent outline-none text-base"
+                                             placeholder="Project Name"
                                              style={{color: textColor}}
                                              onChange={(e) =>{
                                                   const {
@@ -120,7 +130,14 @@ const Navbar = ({
                                    </span>
                               )
                          })}
-                         <ModeToggle/>
+                         <ModeToggle
+                              setIsModalOpen={setIsModalOpen}
+                         />
+                         <AlertModal
+                              isOpen={isModalOpen}
+                              onConfirm = {onConfirm}
+                              onClose={()=> setIsModalOpen(false)}
+                         />
 
                     </div>
 

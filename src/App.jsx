@@ -20,7 +20,7 @@ const  Editor = () => {
   const {
     theme,
     setEventEmitter,
-    podcast,
+    project,
     showAnnotations,
     setShowAnnotations,
     enableAnnotations,
@@ -152,7 +152,7 @@ const actions = [
         ee.on('audiorenderingfinished', function (type , data ){
           Tone.setContext(toneCtx);
           if(type === 'wav'){
-            saveAs(data, `${podcast}.wav`)
+            saveAs(data, `${project}.wav`)
           }
         });
         ee.on('audiosources_rendering', ()=> setDialogBox(true));

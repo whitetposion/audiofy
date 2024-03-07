@@ -8,18 +8,19 @@ const CONTEXT_MENU = 'CONTEXT_MENU';
 const CLOSE_CONTEXT_MENU = 'CLOSE_CONTEXT_MENU';
 const KEY_PRESS = 'KEY_PRESS';
 const EVENT_EMITTER = 'EVENT_EMITTER';
-const PODCAST_TITLE = 'PODCAST_TITLE';
+const PROJECT_TITLE = 'PROJECT_TITLE';
 const SETSHOWANNOTATIONS = 'SETSHOWANNOTATIONS';
 const SETENEABLEANNOTATIONS = 'SETENEABLEANNOTATIONS';
 const ANNOTATIONS = 'ANNOTATIONS';
 const SETDIALOGBOX = 'SETDIALOGBOX';
 
+const mode = localStorage.getItem('mode')
 const initailState = {
-     podcast: 'Podcast',
+     project: '',
      theme: {
-          mode: 'light',
-          backgroundColor: light,
-          textColor: dark
+          mode: mode ? mode : 'dark',
+          backgroundColor: mode ==='light' ? light :dark ,
+          textColor: mode ==='light' ? dark :light 
      },
      contextMenu: {
           clientX: 0,
@@ -42,11 +43,13 @@ function reducer(state , action){
 
      switch(type) {
           case THEME_DARK:
+               localStorage.setItem('mode', 'dark')
                return {
                     ...state,
                     theme: {mode:'dark', backgroundColor: dark , textColor: light},
                };
           case THEME_LIGHT:
+               localStorage.setItem('mode', 'light')
                return {
                     ...state,
                     theme: {mode:'light', backgroundColor: light , textColor: dark},
@@ -68,8 +71,8 @@ function reducer(state , action){
                return { ...state, keyPress: payload };
           case EVENT_EMITTER:
                return { ...state, event_Emitter: payload };
-          case PODCAST_TITLE:
-               return { ...state, podcast: payload };
+          case PROJECT_TITLE:
+               return { ...state, project: payload };
           case ANNOTATIONS:
                return { ...state, annotations: payload };
           case SETSHOWANNOTATIONS:
@@ -114,7 +117,7 @@ export const SettingContext = ({ children}) => {
 
      const changeTitle = (value) => {
           dispatch({
-               type: PODCAST_TITLE,
+               type: PROJECT_TITLE,
                payload: value
           })
      };
@@ -165,7 +168,6 @@ export const SettingContext = ({ children}) => {
           // on key press event listener
           window.onkeydown = (event) => {
             const { key, shiftKey, code } = event;
-               console.log("padsojowfowefj")
             dispatch({
               type: KEY_PRESS,
               payload: { key, shiftKey, code },
