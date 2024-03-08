@@ -76,28 +76,28 @@ const EditorButtons = ({
                     />
                )
           },
-          {
-               name: 'fadein',
-               icon : (
-                    <MoveDownLeft
-                         onClick={() => {
-                              const event = { target: { name: 'fadein' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
-          {
-               name: 'fadeout',
-               icon : (
-                    <MoveDownRight
-                         onClick={() => {
-                              const event = { target: { name: 'fadeout' } };
-                              handleClick(event);
-                         }}   
-                    />
-               )
-          },
+          // {
+          //      name: 'fadein',
+          //      icon : (
+          //           <MoveDownLeft
+          //                onClick={() => {
+          //                     const event = { target: { name: 'fadein' } };
+          //                     handleClick(event);
+          //                }}   
+          //           />
+          //      )
+          // },
+          // {
+          //      name: 'fadeout',
+          //      icon : (
+          //           <MoveDownRight
+          //                onClick={() => {
+          //                     const event = { target: { name: 'fadeout' } };
+          //                     handleClick(event);
+          //                }}   
+          //           />
+          //      )
+          // },
           // {
           //      name: 'zoomin',
           //      icon : (
