@@ -61,7 +61,7 @@ const CustomTimeLine = ({bottom , ee}) => {
                var newDuration = secondToHMS(value);
 
                setDuration(()=> newDuration);
-               setRawValue(()=> newDuration)
+               setRawValue(()=> value)
           })
           ee.on('timeupdate', (start)=> {
                setSeeker(()=>parseFloat(start).toFixed(4))
@@ -107,7 +107,7 @@ const CustomTimeLine = ({bottom , ee}) => {
                                              setIsplaying(!isPlaying);
                                         }} 
                                    >
-                                        {!isPlaying ? (
+                                        {!isPlaying || seeker === 0 ? (
                                              <Play size={30} className={`text-[${textColor}]`}/>
                                         ):(
                                              <Pause size={30} className={`text-[${textColor}]`}/>
@@ -117,7 +117,7 @@ const CustomTimeLine = ({bottom , ee}) => {
                                    </div>
                               </TooltipTrigger>
                               <TooltipContent>
-                                   <p>{isPlaying ? 'Play(shft + space)' : 'Pause(shft + space)'}</p>
+                                   <p>{!isPlaying ? 'Play(shft + space)' : 'Pause(shft + space)'}</p>
                               </TooltipContent>
                          </Tooltip>
                     </TooltipProvider>
@@ -133,7 +133,7 @@ const CustomTimeLine = ({bottom , ee}) => {
                               className= { `audioBar text-[${textColor}]`}
                               min={0}
                               max={rawValue}
-                              step={0.01}
+                              step={0.0001}
                               value={seeker}
                               onChange={(e) => {
                                    const {
