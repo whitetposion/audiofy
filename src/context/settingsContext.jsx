@@ -18,12 +18,12 @@ const ANNOTATIONS = 'ANNOTATIONS';
 // <========== currently not using 
 
 // saving the display theme locally
-const mode = localStorage.getItem('mode')
+const mode = localStorage.getItem('mode') || 'light'
 
 const initailState = {
      project: '',
      theme: {
-          mode: mode ? mode : 'dark',
+          mode: mode ,
           backgroundColor: mode ==='light' ? light :dark ,
           textColor: mode ==='light' ? dark :light 
      },
@@ -194,7 +194,6 @@ export const SettingContext = ({ children}) => {
                     setDialogBox,
                }}
           >
-               {/* insert contextMenu Component */}
                {children}
 
           </ThemeSettings.Provider>

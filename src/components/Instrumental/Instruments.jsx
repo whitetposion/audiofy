@@ -1,4 +1,4 @@
-import { Bell, Bomb, Drum } from "lucide-react";
+import { Bell, Bomb, Drum, FileAudio } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -7,6 +7,15 @@ import { useThemeSettings } from "@/hooks/use-theme-settings";
 const Instrumentals = ({handleUpload}) =>{
      const { theme: {mode, textColor , backgroundColor}} = useThemeSettings();
      const musics = [
+          {
+               name: 'Sample',
+               action: ()=>{
+                    let event = {target : {files : ['music/testaudio.mp3']}}
+                    handleUpload(event);
+               },
+               icon: <FileAudio/>
+               
+          },
           {
                name: 'Bell',
                action: ()=>{

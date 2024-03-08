@@ -110,6 +110,26 @@ const  Editor = () => {
       },
     },
   ];
+  // creating a array for zoom in and out audio frames
+  const start = 6;
+  const end = 4096;
+
+  // Define the number of elements in the array
+  const numElements = 100;
+  
+  // Calculate the logarithmic increment
+  const logStart = Math.log10(start);
+  const logEnd = Math.log10(end);
+  const increment = (logEnd - logStart) / (numElements - 1);
+
+  // Generate the array
+  const array = [];
+  for (let i = 0; i < numElements; i++) {
+      const value = Math.pow(10, logStart + i * increment);
+      array.push(value);
+  }
+  const middleSample = array[numElements/2]
+  
 // ============> React-studio <=======================>
 // container is defined and it only takes const variable 
 // To not do: trying to change the color or value dynamically 
@@ -123,11 +143,11 @@ const  Editor = () => {
             container: node,
             state: 'cursor',
             mono: true,
-            samplesPerPixel: 500,
+            samplesPerPixel: middleSample,
             waveHeight:100,
             isAutomaticScroll:true,
             timescale: false,
-            barGap: 2,
+            barGap: 0,
             colors: {
               waveOutlineColor:backgroundColor,
               timeColor: dark,
@@ -142,7 +162,7 @@ const  Editor = () => {
               },
             },
             
-            zoomLevels:[500, 1000 ,2000],
+            zoomLevels: array,
             seekStyle: 'fill'
           },
           ee

@@ -98,28 +98,28 @@ const EditorButtons = ({
           //           />
           //      )
           // },
-          // {
-          //      name: 'zoomin',
-          //      icon : (
-          //           <ZoomIn
-          //                onClick={() => {
-          //                     const event = { target: { name: 'zoomin' } };
-          //                     handleClick(event);
-          //                }}   
-          //           />
-          //      )
-          // },
-          // {
-          //      name: 'zoomout',
-          //      icon : (
-          //           <ZoomOut
-          //                onClick={() => {
-          //                     const event = { target: { name: 'zoomout' } };
-          //                     handleClick(event);
-          //                }}   
-          //           />
-          //      )
-          // },
+          {
+               name: 'zoomin',
+               icon : (
+                    <ZoomIn
+                         onClick={() => {
+                              const event = { target: { name: 'zoomin' } };
+                              handleClick(event);
+                         }}   
+                    />
+               )
+          },
+          {
+               name: 'zoomout',
+               icon : (
+                    <ZoomOut
+                         onClick={() => {
+                              const event = { target: { name: 'zoomout' } };
+                              handleClick(event);
+                         }}   
+                    />
+               )
+          },
           // {
           //      name: 'addAnnotations',
           //      icon : (
